@@ -1,8 +1,20 @@
+import AccountInfo from "../components/AccountInfo";
 
-function Account(props) {
+
+function Account({user}) {
+
+    
+
     return (
-        <div>
-            <p>Account page</p>
+        <div className="flex justify-center">
+            
+            {user ? 
+
+                <AccountInfo user={user} />
+                
+                : <p>Cargando información</p>
+            }
+            
         </div>
     );
 }
