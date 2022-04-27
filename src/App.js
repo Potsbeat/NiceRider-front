@@ -11,10 +11,10 @@ function App() {
   const [user, setUser] = useState({});
     
   const getRandomData = async () => {
-      const res = await fetch('https://random-data-api.com/api/users/random_user');
+      const res = await fetch('https://randomuser.me/api/');
       const data = await res.json();
-      console.log(data);
-      setUser(data);
+      console.log(data.results[0]);
+      setUser(data.results[0]);
   }
 
   useEffect(()=>{
