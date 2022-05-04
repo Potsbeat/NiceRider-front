@@ -22,8 +22,12 @@ function Login(props) {
     // Este get es para verificar si hay una sesión guardada
     Axios.get(`http://${serverURL.current.ip}:${serverURL.current.port}/login`).then((response)=>{
       console.log(response.data);
-      response.data.isLogged ? navigate('/', { replace: true }) :
-        setRenderLogin(true);
+        if(response.data.isLogged){
+          navigate('/account', { replace: true });
+        }else{
+          setRenderLogin(true);
+        }
+        
 
     });
 
@@ -39,7 +43,7 @@ function Login(props) {
       if(response.data.message)
         setLoginMessage(response.data.message);
       else
-        navigate('/', { replace: true });
+        navigate('/account', { replace: true });
     });
     
   }
