@@ -5,13 +5,12 @@ import Clubs from "./routes/Clubs";
 import Events from "./routes/Events";
 import Login from "./routes/Login";
 import Logout from "./routes/Logout";
-import getServerURL from "./serverlink";
+import svinfo from "./serverlink";
 
 import { useEffect, useRef, useState } from "react";
 import Axios from "axios";
 
 function App() {
-  const serverURL = useRef({});
 
   const [user, setUser] = useState({});
   const [isLogged, setIsLogged] = useState(false);
@@ -21,18 +20,17 @@ function App() {
 
   useEffect(() => {
 
-    serverURL.current = getServerURL();
-
     // Este get es para verificar si hay una sesión guardada
     Axios.get(
-      `http://${serverURL.current.ip}:${serverURL.current.port}/login`
+      `http://${svinfo.ip}:${svinfo.port}/login`
     ).then((response) => {
       if (!response.data.isLogged) {
         navigate("/login", { replace: true });
       } else {
         console.log(response.data);
-        setIsLogged(true);
         setUser(response.data.user[0])
+        setIsLogged(true);
+        
       }
     });
   }, [navigate]);
@@ -44,7 +42,7 @@ function App() {
         <div className="w-full bg-gray-100 overflow-auto">
           <Routes>
             { isLogged && <>
-            <Route path="account" element={<Account user={user} />} />
+            <Route path="account" element={<Account user={user} setUser={setUser} />} />
             <Route path="clubs" element={<Clubs />} />
             <Route path="events" element={<Events />} />
             </>}

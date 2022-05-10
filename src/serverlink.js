@@ -1,7 +1,4 @@
 
-function getServerURL() {
-    const link = {ip: '192.168.0.36', port: '3001'};
-    return link;
-}
+const svinfo = { ip: '192.168.0.36', port: '3001' };
 
-export default getServerURL;
+export default svinfo;
