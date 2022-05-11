@@ -1,7 +1,7 @@
 import  Axios  from "axios";
 import svinfo from '../serverlink';
 import  { useNavigate } from 'react-router-dom'
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 
 function Logout(props) {
     Axios.defaults.withCredentials = true;

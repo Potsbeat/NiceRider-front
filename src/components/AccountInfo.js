@@ -57,11 +57,11 @@ function AccountInfo({ user }) {
   }
 
   useEffect(() => {
-    console.log(user);
+    //console.log(user);
     Axios.get(`http://${svinfo.ip}:${svinfo.port}/userinfo`, {
       params: { email: user.correo },
     }).then((response) => {
-      console.log(response);
+      //console.log(response);
       const userdata = response.data.userdata;
 
       setEditUsername(userdata.apodo);

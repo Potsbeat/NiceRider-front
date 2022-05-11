@@ -57,8 +57,8 @@ function Login(props) {
 
   return (
     renderLogin ? 
-    <div className="fixed inset-0 w-full bg-white flex items-center">
-      <div className="flex flex-col md:w-1/3 w-3/4 mx-auto shadow-lg p-6">
+    <div className="fixed inset-0 w-full bg-white flex items-center justify-center overflow-auto">
+      <div className="flex flex-col md:w-1/3 w-4/5  shadow-lg p-6 ">
       <img
               src={Logo}
               alt="NiceRider logo"
