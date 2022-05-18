@@ -69,23 +69,10 @@ function Login(props) {
         <form onSubmit={e => e.preventDefault()}>
           <div className="flex flex-col items-center">
             
-            <input
-              className="h-10 px-2 outline-none border rounded-md mb-2
-                        md:w-4/5 w-full"
-              type="text"
-              placeholder="Correo electrónico"
+           
+            <Input type="text" plholder="Correo electrónico" setFunction={setEmail} />
 
-              onChange={e => setEmail(e.target.value)}
-
-            />
-            <input
-              className="h-10 px-2 outline-none border rounded-md mb-2
-                        md:w-4/5 w-full"
-              type="password"
-              placeholder="Contraseña"
-
-              onChange={e => setPassword(e.target.value)}
-            />
+            <Input type="password" plholder="Contraseña" setFunction={setPassword} />
 
             <span className="text-red-900 mb-1">{loginMessage}</span>
 
@@ -122,5 +109,16 @@ function Login(props) {
     </div>
   );
 }
+
+const Input = ({type, plholder, setFunction}) => (
+  <input
+              className="h-10 px-2 outline-none border rounded-md mb-2 font-roboto font-extralight
+                        md:w-4/5 w-full"
+              type={type}
+              placeholder={plholder}
+
+              onChange={e => setFunction(e.target.value)}
+            />
+)
 
 export default Login;

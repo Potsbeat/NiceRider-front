@@ -180,7 +180,7 @@ function AccountInfo({ user }) {
             <Info>{userdata && userdata.tiempoviaje} h</Info>
           </Section>
 
-          <Link to="logout" className="self-end">
+          <Link to="/logout" className="self-end">
           <button
               className="font-roboto font-normal text-sm mt-2 bg-transparent text-cyan-900 mb-14"
             >

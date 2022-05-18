@@ -1,9 +1,16 @@
 
 function Clubs(props) {
     return (
-        <div>
-            <p>Clubs page</p>
-        </div>
+        <div className="flex justify-center min-h-full">
+      <div
+        className="w-full flex flex-col  items-center bg-white 
+                    md:w-3/4 md:shadow-md"
+      >
+
+        Motoclubs
+
+      </div>
+    </div>
     );
 }
 
