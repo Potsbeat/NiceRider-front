@@ -1,7 +1,11 @@
 import { useState } from "react";
 import DatePicker from "./DatePicker";
+import  Axios  from "axios";
+import  { useNavigate } from 'react-router-dom'
+import svinfo from '../serverlink';
 
-function CreateAccountForm(props) {
+function CreateAccountForm({ loginFunction }) {
+  Axios.defaults.withCredentials = true;
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [name, setName] = useState("");
@@ -11,17 +15,85 @@ function CreateAccountForm(props) {
   const [birthDate, setBirthDate] = useState("");
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
-  
-
 
   const [queryMessage, setQueryMessage] = useState("");
 
-  function dateValidation(str) {
-    const date_regex =
-      /^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/;
-    if (!date_regex.test(str)) {
+  const navigate = useNavigate();
+
+  function dateValidation(dateStr) {
+    
+    const regex = /^\d{4}-\d{2}-\d{2}$/gm;
+
+    if (dateStr.match(regex) === null) {
+     
       return false;
     }
+
+    const date = new Date(dateStr);
+
+    const timestamp = date.getTime();
+
+    if (typeof timestamp !== "number" || Number.isNaN(timestamp)) {
+      
+      return false;
+    }
+   
+    return date.toISOString().startsWith(dateStr);
+  }
+
+  function lengthValidation(){
+    if(email.trim().length < 1) return 'El correo no puede estar vacío';
+    if(username.trim().length < 1) return 'El nombre de usuario no puede estar vacío';
+    if(name.trim().length < 1) return 'El nombre no puede estar vacío';
+    if(ap.trim().length < 1) return 'El primer apellido no puede estar vacío';
+    if(am.trim().length < 1) return 'El segundo apellido no puede estar vacío';
+    if(phone.trim().length < 1) return 'El número telefónico no puede estar vacío';
+    if(password.trim().length < 6) return 'La contraseña debe tener al menos 6 caracteres';
+
+    return '';
+  }
+
+  function passwdValidation(passwd1, passwd2){
+    return passwd1 == passwd2;
+  }
+
+  const createAccount = () => {
+
+    let isLengthValid = lengthValidation();
+
+    if(isLengthValid.length > 0){
+      setQueryMessage(isLengthValid);
+      return;
+    }
+
+    if(!dateValidation(birthDate)){
+      setQueryMessage('La fecha de nacimiento no es válida');
+      return;
+    }
+
+    if(!passwdValidation(password, password2)){
+      setQueryMessage('Las contraseñas no coinciden');
+      return;
+    }
+
+    Axios.post(`http://${svinfo.ip}:${svinfo.port}/createAccount`,{
+      email: email.trim(),
+      username: username.trim(),
+      name: name.trim(),
+      ap: ap.trim(),
+      am: am.trim(),
+      phone: phone.trim(),
+      birthDate: birthDate.trim(),
+      password: password.trim(),
+      
+
+    }).then((response) => {
+      
+      if(response.data.error)
+        setQueryMessage(response.data.error);
+      else
+        loginFunction(email.trim(), password.trim(),setQueryMessage, navigate);
+    });
   }
 
   return (
@@ -44,12 +116,15 @@ function CreateAccountForm(props) {
       <div className="flex flex-wrap md:w-4/5 mb-2">
         <p className="font-roboto font-light">Fecha de nacimiento: </p>
         <DatePicker setDate={setBirthDate} />
-        
       </div>
 
       <Input type="password" holder="Contraseña" setFunction={setPassword} />
 
-      <Input type="password" holder="Confirmar Contraseña" setFunction={setPassword} />
+      <Input
+        type="password"
+        holder="Confirmar Contraseña"
+        setFunction={setPassword2}
+      />
 
       <span className="text-red-900 mb-1">{queryMessage}</span>
 
@@ -57,7 +132,7 @@ function CreateAccountForm(props) {
         type="submit"
         className="rounded-md bg-amber-500 py-2 md:w-4/5 w-full text-white
                             shadow-md transition-all hover:text-black"
-        onClick={() => null}
+        onClick={createAccount}
       >
         Confirmar
       </button>

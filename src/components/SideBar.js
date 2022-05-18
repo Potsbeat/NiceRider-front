@@ -48,8 +48,8 @@ const SideBarIcon = ({ icon, text, path }) => (
   <Link
     to={path}
     className=" 
-      flex flex-col justify-center items-center text-amber-800 py-2 w-full border-t
-      md:border-b md:border-t-0
+      flex flex-col justify-center items-center text-amber-800 py-2 w-full border-t h-14
+      md:border-b md:border-t-0 md:h-fit
       hover:cursor-pointer hover:bg-gray-200 transition-colors"
   >
     {icon}

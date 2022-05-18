@@ -79,7 +79,7 @@ function DatePicker({setDate}) {
 
       const classes = "bg-white shadow-md shadow-slate-300 outline-none rounded-md px-2 py-1 font-roboto font-light";
     
-      const [day, setDay] = useState('01');
+      const [day, setDay] = useState('1');
       const [month, setMonth] = useState('01')
       const [year, setYear] = useState('1930');
 

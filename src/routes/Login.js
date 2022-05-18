@@ -19,7 +19,7 @@ function Login(props) {
   Axios.defaults.withCredentials = true;
 
   useEffect(()=>{
-    console.log(`http://${svinfo.ip}:${svinfo.port}/login`);
+    
 
     // Este get es para verificar si hay una sesión guardada
     Axios.get(`http://${svinfo.ip}:${svinfo.port}/login`).then((response)=>{
@@ -28,24 +28,25 @@ function Login(props) {
           navigate('/account', { replace: true });
         }else{
           setRenderLogin(true);
+          
         }
         
 
     });
 
-  },[]);
+  },[navigate]);
 
-  const login = () => { // Este login es para loguear si no hay una sesión guardada
+  const login = (email, password, setStatusMsg, redirect) => { // Este login es para loguear si no hay una sesión guardada
     
     Axios.post(`http://${svinfo.ip}:${svinfo.port}/login`,{
       email: email,
       password: password
     }).then((response) => {
-      console.log(response);
+      
       if(response.data.message)
-        setLoginMessage(response.data.message);
+        setStatusMsg(response.data.message);
       else
-        navigate('/account', { replace: true });
+        redirect('/account', { replace: true });
     });
     
   }
@@ -93,7 +94,7 @@ function Login(props) {
               className="rounded-md bg-amber-500 py-2 md:w-4/5 w-full text-white
                             shadow-md transition-all hover:text-black"
               
-              onClick={login}
+              onClick={()=>login(email, password, setLoginMessage, navigate)}
             >
               Ingresar
             </button>
@@ -101,7 +102,7 @@ function Login(props) {
             
           </div>
         </form> : 
-        <CreateAccountForm />
+        <CreateAccountForm loginFunction={login} />
         }
         <button
               

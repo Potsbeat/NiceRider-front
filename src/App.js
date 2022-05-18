@@ -27,7 +27,7 @@ function App() {
       if (!response.data.isLogged) {
         navigate("/login", { replace: true });
       } else {
-        console.log(response.data);
+        
         setUser(response.data.user[0])
         setIsLogged(true);
         

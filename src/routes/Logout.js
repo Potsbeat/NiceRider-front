@@ -3,7 +3,7 @@ import svinfo from '../serverlink';
 import  { useNavigate } from 'react-router-dom'
 import { useEffect } from "react";
 
-function Logout(props) {
+function Logout() {
     Axios.defaults.withCredentials = true;
     
    
@@ -15,6 +15,7 @@ function Logout(props) {
     
         Axios.post(`http://${svinfo.ip}:${svinfo.port}/logout`)
         .then((response)=>{
+            
             navigate('/login', { replace: true });           
         });
 
