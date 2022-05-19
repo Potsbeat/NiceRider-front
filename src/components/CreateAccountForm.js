@@ -2,7 +2,6 @@ import { useState } from "react";
 import DatePicker from "./DatePicker";
 import  Axios  from "axios";
 import  { useNavigate } from 'react-router-dom'
-import svinfo from '../serverlink';
 
 function CreateAccountForm({ loginFunction }) {
   Axios.defaults.withCredentials = true;
@@ -76,7 +75,7 @@ function CreateAccountForm({ loginFunction }) {
       return;
     }
 
-    Axios.post(`http://${svinfo.ip}:${svinfo.port}/createAccount`,{
+    Axios.post(`http://${process.env.REACT_APP_BACKEND}/createAccount`,{
       email: email.trim(),
       username: username.trim(),
       name: name.trim(),

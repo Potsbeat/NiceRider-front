@@ -1,5 +1,5 @@
 import  Axios  from "axios";
-import svinfo from '../serverlink';
+//import svinfo from '../serverlink';
 import  { useNavigate } from 'react-router-dom'
 import { useEffect } from "react";
 
@@ -13,7 +13,7 @@ function Logout() {
     useEffect(()=>{
        
     
-        Axios.post(`http://${svinfo.ip}:${svinfo.port}/logout`)
+        Axios.post(`http://${process.env.REACT_APP_BACKEND}/logout`)
         .then((response)=>{
             
             navigate('/login', { replace: true });           

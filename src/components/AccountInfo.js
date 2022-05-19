@@ -1,7 +1,6 @@
 import Axios from "axios";
 import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import svinfo from "../serverlink";
 
 function AccountInfo({ user }) {
   const [readonly, setReadOnly] = useState(true);
@@ -51,7 +50,7 @@ function AccountInfo({ user }) {
   function saveChanges() {
     if (validateData()) {
       setSaveStatusMessage("Guardando...");
-      Axios.put(`http://${svinfo.ip}:${svinfo.port}/update`, {
+      Axios.put(`http://${process.env.REACT_APP_BACKEND}/update`, {
         email: user.correo,
         username: editUsername.trim(),
         name: editname.trim(),
@@ -71,7 +70,7 @@ function AccountInfo({ user }) {
 
   useEffect(() => {
     //console.log(user);
-    Axios.get(`http://${svinfo.ip}:${svinfo.port}/userinfo`, {
+    Axios.get(`http://${process.env.REACT_APP_BACKEND}/userinfo`, {
       params: { email: user.correo },
     }).then((response) => {
       const userdata2 = response.data.userdata;
@@ -180,7 +179,7 @@ function AccountInfo({ user }) {
             <Info>{userdata && userdata.tiempoviaje} h</Info>
           </Section>
 
-          <Link to="logout" className="self-end">
+          <Link to="/logout" className="self-end">
           <button
               className="font-roboto font-normal text-sm mt-2 bg-transparent text-cyan-900 mb-14"
             >

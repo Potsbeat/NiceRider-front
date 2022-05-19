@@ -1,7 +1,6 @@
 import  Axios  from "axios";
 import { useEffect,  useState } from "react";
 import  { useNavigate } from 'react-router-dom'
-import svinfo from '../serverlink';
 
 import Logo from "../img/motorcycle.svg";
 import CreateAccountForm from "../components/CreateAccountForm";
@@ -22,7 +21,7 @@ function Login(props) {
     
 
     // Este get es para verificar si hay una sesión guardada
-    Axios.get(`http://${svinfo.ip}:${svinfo.port}/login`).then((response)=>{
+    Axios.get(`http://${process.env.REACT_APP_BACKEND}/login`).then((response)=>{
       console.log(response.data);
         if(response.data.isLogged){
           navigate('/account', { replace: true });
@@ -38,7 +37,7 @@ function Login(props) {
 
   const login = (email, password, setStatusMsg, redirect) => { // Este login es para loguear si no hay una sesión guardada
     
-    Axios.post(`http://${svinfo.ip}:${svinfo.port}/login`,{
+    Axios.post(`http://${process.env.REACT_APP_BACKEND}/login`,{
       email: email,
       password: password
     }).then((response) => {
@@ -69,23 +68,10 @@ function Login(props) {
         <form onSubmit={e => e.preventDefault()}>
           <div className="flex flex-col items-center">
             
-            <input
-              className="h-10 px-2 outline-none border rounded-md mb-2
-                        md:w-4/5 w-full"
-              type="text"
-              placeholder="Correo electrónico"
+           
+            <Input type="text" plholder="Correo electrónico" setFunction={setEmail} />
 
-              onChange={e => setEmail(e.target.value)}
-
-            />
-            <input
-              className="h-10 px-2 outline-none border rounded-md mb-2
-                        md:w-4/5 w-full"
-              type="password"
-              placeholder="Contraseña"
-
-              onChange={e => setPassword(e.target.value)}
-            />
+            <Input type="password" plholder="Contraseña" setFunction={setPassword} />
 
             <span className="text-red-900 mb-1">{loginMessage}</span>
 
@@ -122,5 +108,16 @@ function Login(props) {
     </div>
   );
 }
+
+const Input = ({type, plholder, setFunction}) => (
+  <input
+              className="h-10 px-2 outline-none border rounded-md mb-2 font-roboto font-extralight
+                        md:w-4/5 w-full"
+              type={type}
+              placeholder={plholder}
+
+              onChange={e => setFunction(e.target.value)}
+            />
+)
 
 export default Login;
